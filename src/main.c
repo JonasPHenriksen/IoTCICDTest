@@ -20,6 +20,8 @@ int main() {
   tone_init();
   wifi_init();
 
+  tone_play_mario();
+
   wifi_command_join_AP("JOIIIN IOT", "bxww1482");
   tcp_listen("192.168.43.221", 23); // Listen for incoming messages
 
