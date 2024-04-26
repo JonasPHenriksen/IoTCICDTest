@@ -20,7 +20,7 @@ int main() {
   tone_init();
   wifi_init();
 
-  display_setValues(2,8,7,1);
+  display_setValues(1,0,1,2);
 
   wifi_command_join_AP("JOIIIN IOT", "bxww1482");
   tcp_listen("192.168.43.221", 23); // Listen for incoming messages
