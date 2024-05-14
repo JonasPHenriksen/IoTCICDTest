@@ -1,18 +1,12 @@
-#include "tone.h"
-#include "unity.h"
-#include <util/delay.h>
-#include "pir.h"
-
-
+#include "includes.h"
+#include "pump.h"
 
 void setUp(void)
 {
+    pump_init();
+    pir_init(pir_callback_func);
 }
-
-void tearDown(void)
-{
-}
-
+void tearDown(void) {}
 
 uint8_t pir_callback_called = 0;
 void pir_callback_func()
@@ -20,17 +14,10 @@ void pir_callback_func()
     pir_callback_called = 1;
 }
 
-void test_pir_if_it_calls_the_callback_function_in_20sec_time_after_activating_tone()
+void test_pir_if_it_calls_the_callback_function_in_20sec_time_after_activating_pump()
 {
-    pir_init(pir_callback_func);
-    tone_init();
-    
-    tone_play(5, 200);
-        _delay_ms(100);
-    tone_play(5, 200);
-
     _delay_ms(100);
-    //tone_play_starwars();
+    pump_run(20);
 
     pir_callback_called = 0;
     uint16_t timer = 0;
@@ -47,16 +34,12 @@ void test_pir_if_it_calls_the_callback_function_in_20sec_time_after_activating_t
     TEST_MESSAGE(message); // TEST_MESSAGE("m e s s a g e :1:_:PASS\n"); // no : in the message
 }
 
-
-
-
-
 int main(void)
 {
     UNITY_BEGIN();
 
-    TEST_MESSAGE("INFO! wave your hand above the pir sensor after the tone plays       :1:_:PASS\n"); // no : in the message
-    RUN_TEST(test_pir_if_it_calls_the_callback_function_in_20sec_time_after_activating_tone);
+    TEST_MESSAGE("INFO! wave your hand above the pir sensor after pump runs       :1:_:PASS\n"); // no : in the message
+    RUN_TEST(test_pir_if_it_calls_the_callback_function_in_20sec_time_after_activating_pump);
 
     return UNITY_END();
 }
